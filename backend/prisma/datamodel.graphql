@@ -1,0 +1,20 @@
+type User {
+  id: ID! @id
+  age: Int
+  email: String! @unique
+  name: String!
+}
+
+type Product {
+  id: ID! @id
+  name: String!
+  latinName: String!
+  variety: String!
+  category: String!
+  description: String!
+  price: Float!
+  createDate: DateTime!
+  height: Float!
+  destinationCountry: String!
+  image: String!
+}

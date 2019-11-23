@@ -1,0 +1,10 @@
+# import * from './generated/prisma.graphql'
+
+type Query{
+    products: [Product]
+    product(where: ProductWhereUniqueInput!): Product
+ }
+
+type Mutation{
+    createProduct(data: ProductCreateInput!): Product!
+}
