@@ -1,8 +1,10 @@
 type User {
   id: ID! @id
-  age: Int
-  email: String! @unique
   name: String!
+  email: String! @unique
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
 }
 
 type Product {
@@ -13,7 +15,6 @@ type Product {
   category: String!
   description: String!
   price: Float!
-  createDate: DateTime!
   height: Float!
   destinationCountry: String!
   image: String!

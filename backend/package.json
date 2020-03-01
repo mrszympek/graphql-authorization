@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "graphql-yoga": "^1.18.3",
     "prisma-binding": "^2.3.16",
     "prisma-client-lib": "^1.34.10"

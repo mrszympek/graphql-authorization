@@ -59,12 +59,9 @@ export const ADD_PRODUCT = gql`
 `;
 
 export const handleFormSubmit = async (values: ProductValues) => {
-
-  console.log('values', values);
-
   const { data } = await client.mutate<ProductValues>({
     mutation: ADD_PRODUCT,
-    refetchQueries: GET_PRODUCTS,
+    // refetchQueries: GET_PRODUCTS,
     variables: {
       name: values.name,
       description: values.description,
@@ -76,7 +73,7 @@ export const handleFormSubmit = async (values: ProductValues) => {
       latinName: values.latinName,
       variety: values.variety,
       image: values.image
-    }
+    },
   });
 
   if(data) {

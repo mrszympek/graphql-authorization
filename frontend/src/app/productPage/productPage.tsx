@@ -32,7 +32,7 @@ export const fetchExactProductData = async (
 ) => {
   const { data } = await client.query({
     query: GET_EXACT_PRODUCT,
-    variables: { id: id }
+    variables: { id: id },
   });
 
   if (data) {
