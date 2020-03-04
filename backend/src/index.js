@@ -1,6 +1,5 @@
 const {GraphQLServer} = require('graphql-yoga');
 const {Prisma, forwardTo} = require('prisma-binding');
-const bcrypt = require('bcryptjs')
 
 const resolvers = {
     Query: {
@@ -9,14 +8,6 @@ const resolvers = {
     },
     Mutation: {
         createProduct: forwardTo('db'),
-        register: async (parent, {username, password}, ctx, info) => {
-            const hashedPassword = await bcrypt.hash(password, 10)
-            const user = await ctx.prisma.createUser({
-                username,
-                password: hashedPassword
-            });
-            return user
-        },
     },
 };
 

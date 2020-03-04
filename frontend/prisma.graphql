@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sat Nov 16 2019 14:45:13 GMT+0100 (CET)
+# timestamp: Wed Mar 04 2020 20:13:03 GMT+0100 (CET)
 
 type AggregateProduct {
   count: Int!
@@ -13,8 +13,6 @@ type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
 }
-
-scalar DateTime
 
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
@@ -72,7 +70,6 @@ type Product implements Node {
   category: String!
   description: String!
   price: Float!
-  createDate: DateTime!
   height: Float!
   destinationCountry: String!
   image: String!
@@ -96,7 +93,6 @@ input ProductCreateInput {
   category: String!
   description: String!
   price: Float!
-  createDate: DateTime!
   height: Float!
   destinationCountry: String!
   image: String!
@@ -126,8 +122,6 @@ enum ProductOrderByInput {
   description_DESC
   price_ASC
   price_DESC
-  createDate_ASC
-  createDate_DESC
   height_ASC
   height_DESC
   destinationCountry_ASC
@@ -144,7 +138,6 @@ type ProductPreviousValues {
   category: String!
   description: String!
   price: Float!
-  createDate: DateTime!
   height: Float!
   destinationCountry: String!
   image: String!
@@ -194,7 +187,6 @@ input ProductUpdateInput {
   category: String
   description: String
   price: Float
-  createDate: DateTime
   height: Float
   destinationCountry: String
   image: String
@@ -207,7 +199,6 @@ input ProductUpdateManyMutationInput {
   category: String
   description: String
   price: Float
-  createDate: DateTime
   height: Float
   destinationCountry: String
   image: String
@@ -484,28 +475,6 @@ input ProductWhereInput {
 
   """All values greater than or equal the given value."""
   price_gte: Float
-  createDate: DateTime
-
-  """All values that are not equal to given value."""
-  createDate_not: DateTime
-
-  """All values that are contained in given list."""
-  createDate_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createDate_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createDate_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createDate_lte: DateTime
-
-  """All values greater than the given value."""
-  createDate_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createDate_gte: DateTime
   height: Float
 
   """All values that are not equal to given value."""
@@ -636,8 +605,6 @@ type Subscription {
 
 type User implements Node {
   id: ID!
-  age: Int
-  email: String!
   name: String!
 }
 
@@ -653,8 +620,6 @@ type UserConnection {
 
 input UserCreateInput {
   id: ID
-  age: Int
-  email: String!
   name: String!
 }
 
@@ -670,18 +635,12 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
-  age_ASC
-  age_DESC
-  email_ASC
-  email_DESC
   name_ASC
   name_DESC
 }
 
 type UserPreviousValues {
   id: ID!
-  age: Int
-  email: String!
   name: String!
 }
 
@@ -723,14 +682,10 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateInput {
-  age: Int
-  email: String
   name: String
 }
 
 input UserUpdateManyMutationInput {
-  age: Int
-  email: String
   name: String
 }
 
@@ -783,68 +738,6 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  age: Int
-
-  """All values that are not equal to given value."""
-  age_not: Int
-
-  """All values that are contained in given list."""
-  age_in: [Int!]
-
-  """All values that are not contained in given list."""
-  age_not_in: [Int!]
-
-  """All values less than the given value."""
-  age_lt: Int
-
-  """All values less than or equal the given value."""
-  age_lte: Int
-
-  """All values greater than the given value."""
-  age_gt: Int
-
-  """All values greater than or equal the given value."""
-  age_gte: Int
-  email: String
-
-  """All values that are not equal to given value."""
-  email_not: String
-
-  """All values that are contained in given list."""
-  email_in: [String!]
-
-  """All values that are not contained in given list."""
-  email_not_in: [String!]
-
-  """All values less than the given value."""
-  email_lt: String
-
-  """All values less than or equal the given value."""
-  email_lte: String
-
-  """All values greater than the given value."""
-  email_gt: String
-
-  """All values greater than or equal the given value."""
-  email_gte: String
-
-  """All values containing the given string."""
-  email_contains: String
-
-  """All values not containing the given string."""
-  email_not_contains: String
-
-  """All values starting with the given string."""
-  email_starts_with: String
-
-  """All values not starting with the given string."""
-  email_not_starts_with: String
-
-  """All values ending with the given string."""
-  email_ends_with: String
-
-  """All values not ending with the given string."""
-  email_not_ends_with: String
   name: String
 
   """All values that are not equal to given value."""
@@ -889,5 +782,4 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
-  email: String
 }

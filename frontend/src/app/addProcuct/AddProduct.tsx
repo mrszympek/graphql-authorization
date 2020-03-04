@@ -18,7 +18,6 @@ export const productInitialValues: ProductValues = {
   name: '',
   latinName: '',
   category: '',
-  createDate: '',
   height: 0,
   description: '',
   price: 0,
@@ -44,7 +43,6 @@ export const ADD_PRODUCT = gql`
       description: $description,
       price: $price,
       category: $category,
-      createDate: "2015-11-22T13:57:31.43Z",
       destinationCountry: $destinationCountry,
       height: $height,
       latinName: $latinName,
@@ -61,13 +59,12 @@ export const ADD_PRODUCT = gql`
 export const handleFormSubmit = async (values: ProductValues) => {
   const { data } = await client.mutate<ProductValues>({
     mutation: ADD_PRODUCT,
-    // refetchQueries: GET_PRODUCTS,
+    refetchQueries: GET_PRODUCTS,
     variables: {
       name: values.name,
       description: values.description,
       price: values.price,
       category: values.category,
-      createDate: '2015-11-22T13:57:31.43Z',
       destinationCountry: values.destinationCountry,
       height: values.height,
       latinName: values.latinName,
