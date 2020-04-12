@@ -6,75 +6,61 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 import { gql } from 'apollo-boost';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { useEffect, useState } from 'react';
 import * as React from 'react';
 import * as Yup from 'yup';
 import { client } from '../../lib/apollo/client';
 import { Product } from '../../lib/index';
-import { GET_PRODUCTS } from '../productsList/productsList';
+import { GET_EXACT_PRODUCT } from '../productPage/productPage';
 
-export type ProductValues = Omit<Product, 'id'>;
+export type ProductValues = Product;
 
-export const productInitialValues: ProductValues = {
-  name: 't',
-  latinName: 't',
-  category: 't',
-  height: 0,
-  description: 't',
-  price: 0,
-  variety: 't',
-  destinationCountry: 't',
-  image: 't'
-};
-
-export const ADD_PRODUCT = gql`
-  mutation addProduct(
-    $name: String!,
-    $description: String!,
-    $price: Float!,
-    $category: String!,
-    $destinationCountry: String!,
-    $height: Float!,
-    $latinName: String!,
-    $variety: String!
-    $image: String!
-  ) {
-    createProduct(data: {
-      name: $name,
-      description: $description,
-      price: $price,
-      category: $category,
-      destinationCountry: $destinationCountry,
-      height: $height,
-      latinName: $latinName,
-      variety: $variety,
-      image: $image
-    })
-    {
-      name
-      id
+export const UPDATE_PRODUCT = gql`
+    mutation updateProduct($data: ProductUpdateInput!, $where: ProductWhereUniqueInput!) {
+        updateProduct(data: $data, where: $where)
+        {
+            name
+            id
+        }
     }
-  }
 `;
+
+export const fetchExactProductData = async (
+  setProduct: React.Dispatch<React.SetStateAction<Product>>,
+  id: any
+) => {
+  const { data } = await client.query({
+    query: GET_EXACT_PRODUCT,
+    variables: { id: id },
+  });
+
+  if (data) {
+    setProduct(data.product);
+  }
+};
 
 export const handleFormSubmit = async (values: ProductValues) => {
   const { data } = await client.mutate<ProductValues>({
-    mutation: ADD_PRODUCT,
-    // refetchQueries: GET_PRODUCTS,
+    mutation: UPDATE_PRODUCT,
     variables: {
-      name: values.name,
-      description: values.description,
-      price: values.price,
-      category: values.category,
-      destinationCountry: values.destinationCountry,
-      height: values.height,
-      latinName: values.latinName,
-      variety: values.variety,
-      image: values.image
+      data: {
+        name: values.name,
+        description: values.description,
+        price: values.price,
+        category: values.category,
+        destinationCountry: values.destinationCountry,
+        height: values.height,
+        latinName: values.latinName,
+        variety: values.variety,
+        image: values.image,
+      }, where: {
+        id: values.id
+      }
     },
   });
 
-  if(data) {
-    alert('PRZESZLO');
+  if (data) {
+    alert('UPDATED');
   }
 };
 
@@ -84,7 +70,7 @@ export const PriceComponent = ({ field }: FieldProps<ProductValues>) => (
     type="number"
     id="standard-required"
     margin="normal"
-    label={field.name}
+    label={ field.name }
     { ...field }
   />);
 
@@ -94,25 +80,27 @@ export const TextComponent: React.FC<FieldProps<ProductValues>> = ({
 
   const isFormValid = form && form.errors && form.errors.hasOwnProperty(field.name);
 
-  return(
+  return (
     <div>
       <TextField
-        error={isFormValid}
+        error={ isFormValid }
         id="standard-required"
         label={ field.name }
         margin="normal"
+        defaultValue={ 'x' }
         fullWidth={ true }
+        variant={ 'standard' }
         { ...field }
       />
       <span>
         {
           form &&
           form.errors &&
-            form.errors.name
+          form.errors.name
         }
       </span>
     </div>
-  )
+  );
 };
 
 export const addProductSchema = Yup.object().shape({
@@ -120,11 +108,11 @@ export const addProductSchema = Yup.object().shape({
     .required('Required'),
   latinName: Yup.string()
     .required('Required'),
-  category:  Yup.string()
+  category: Yup.string()
     .required('Required'),
   height: Yup.number()
     .required('Required'),
-  description:Yup.string()
+  description: Yup.string()
     .required('Required'),
   price: Yup.number()
     .required('Required'),
@@ -134,7 +122,16 @@ export const addProductSchema = Yup.object().shape({
     .required('Required'),
 });
 
-export const AddProduct = () => {
+export const EditProduct = ({ match }: any) => {
+  const [product, setProduct] = useState<Product>({} as Product);
+  const [productId, setProductId] = useState<string>('');
+
+  useEffect(() => {
+    const id = match && match.params && match.params.id;
+    setProductId(id);
+    fetchExactProductData(setProduct, id);
+  }, [product]);
+
   const useStyles = makeStyles(theme => ({
     root: {
       padding: theme.spacing(3, 2),
@@ -143,21 +140,21 @@ export const AddProduct = () => {
 
   const classes = useStyles();
 
+  if (!product) {
+    return <></>;
+  }
+
   return (
-    <Paper className={classes.root}>
-      <Typography className="mb-m" variant={'h5'}>Add new product</Typography>
+    <Paper className={ classes.root }>
+      <Typography className="mb-m" variant={ 'h5' }>Add new product</Typography>
 
       <Formik
-        initialValues={ productInitialValues }
+        initialValues={ product }
+        enableReinitialize={ true }
         onSubmit={ (values) => handleFormSubmit(values) }
         validationSchema={ addProductSchema }
         render={ (formikBag: FormikProps<ProductValues>) => (
           <Form>
-						<pre>
-							{
-                JSON.stringify(formikBag, null, 2)
-              }
-						</pre>
             <Grid
               container
               spacing={ 3 }

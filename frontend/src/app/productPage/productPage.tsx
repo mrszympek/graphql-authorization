@@ -1,4 +1,4 @@
-import { Paper } from '@material-ui/core';
+import { Paper, Button } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 import gql from 'graphql-tag';
@@ -11,19 +11,19 @@ import { Product } from '../../lib/index';
 export const GeneratedQRCode: React.FC<{ id: any }> = ({ id }) => <QRCode value={ id } />;
 
 export const GET_EXACT_PRODUCT = gql`
-  query getExactProduct($id: ID!){
-    product(where: {id: $id }) {
-      name
-      id
-      price
-      category
-      destinationCountry
-      latinName
-      variety
-      description
-      image
+    query getExactProduct($id: ID!){
+        product(where: {id: $id }) {
+            name
+            id
+            price
+            category
+            destinationCountry
+            latinName
+            variety
+            description
+            image
+        }
     }
-  }
 `;
 
 export const fetchExactProductData = async (

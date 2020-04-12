@@ -8,6 +8,7 @@ const resolvers = {
     },
     Mutation: {
         createProduct: forwardTo('db'),
+        updateProduct: forwardTo('db'),
     },
 };
 

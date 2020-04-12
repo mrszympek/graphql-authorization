@@ -7,4 +7,5 @@ type Query{
 
 type Mutation{
     createProduct(data: ProductCreateInput!): Product!
+    updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
 }
