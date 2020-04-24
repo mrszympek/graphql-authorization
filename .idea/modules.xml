@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/prisma-test.iml" filepath="$PROJECT_DIR$/.idea/prisma-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Scantree/.idea/scantree.iml" filepath="$PROJECT_DIR$/../Scantree/.idea/scantree.iml" />
     </modules>
   </component>
 </project>

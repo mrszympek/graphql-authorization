@@ -19,12 +19,12 @@ export const routingPaths = [
     path: '/products',
     component: ProductsList
   },
-  // {
-  //   path: '/product/:id',
-  //   component: ProductPage
-  // },
   {
-    path: '/product/edit/:id',
+    path: '/product/:id',
+    component: ProductPage
+  },
+  {
+    path: '/product/:id/edit',
     component: EditProduct
   }
 ];
@@ -33,7 +33,7 @@ export const RoutingComponent: React.FC<{}> = () => (
   <>
     {
       routingPaths.map( (e, index) => (
-        <Route path={e.path} component={e.component} key={index}/>
+        <Route exact path={e.path} component={e.component} key={index}/>
       ))
     }
   </>

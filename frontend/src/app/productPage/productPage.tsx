@@ -1,10 +1,12 @@
 import { Paper, Button } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import TableCell from '@material-ui/core/TableCell';
 import Typography from '@material-ui/core/Typography';
 import gql from 'graphql-tag';
 import QRCode from 'qrcode.react';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { client } from '../../lib/apollo/client';
 import { Product } from '../../lib/index';
 
@@ -63,6 +65,7 @@ export const ProductPage = ({ match }: any) => {
     <>
       <Paper className={classes.root}>
         <Typography className="mb-m" variant={'h4'}>{ product.name }</Typography>
+        <Link to={ `/product/${ product.id }/edit` }>Edytuj</Link>
         <div className="mb-s"><span className="fw-medium">Nazwa łacińska produktu: </span>{ product.latinName }</div>
         <div className="mb-s"><span className="fw-medium">Odmiana: </span>{ product.variety }</div>
         <div className="mb-s"><span className="fw-medium">Kategoria: </span>{ product.category }</div>
